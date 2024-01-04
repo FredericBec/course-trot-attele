@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -14,7 +15,8 @@ public class HarnessedTrotRun {
 	public static final int[] fourthSpeed = {-1, 0, 0, 0, 1, 1};
 	public static final int[] fifthSpeed = {-2, -1, 0, 0, 0, 1};
 	public static final int[] sixthSpeed = {-2, -1, 0, 0, 0, 0};
-	public static HashMap<Integer, String> horsesList = new HashMap<Integer, String>();
+	public static final int[] horsesStart = {actualSpeed, startLine};
+	public static HashMap<String, int[]> horsesList = new HashMap<String, int[]>();
 	
 	public static Scanner scan = new Scanner(System.in);
 	
@@ -25,14 +27,23 @@ public class HarnessedTrotRun {
 		int userChoice = scan.nextInt();
 		
 		for(int i = 1; i < userChoice; i++) {
-			horsesList.put(i, "Cheval " + i);
+			horsesList.put(("Cheval " + i), horsesStart);
 		}
 		
-		for(int i : horsesList.keySet()) {
-			System.out.println(horsesList.get(i));
+		for(String i : horsesList.keySet()) {
+			System.out.println(i + " " + Arrays.toString(horsesList.get(i)));
 		}
 		
+		runChoice();
 		
+		String response = "o";
+		while(response.equalsIgnoreCase("o")) {
+			
+			
+			System.out.println("Veuillez faire avancer le tour en tapant o");
+			scan.nextLine();
+			response = scan.nextLine();
+		}
 		
 	}
 	
@@ -134,6 +145,12 @@ public class HarnessedTrotRun {
 		
 	}
 	
-	
+	public static void winnerTierce(String[] horses) {
+		int thirdWinner = 3;
+		for(int i = 0; i < thirdWinner; i++) {
+			System.out.println(horses[i]);
+		} 
+		
+	}
 
 }
