@@ -22,23 +22,34 @@ public class HarnessedTrotRun {
 	
 	
 	public static void main(String[] args) {
-		
 		System.out.println("Choisissez le nombre de chevaux au départ de la course :");
 		int userChoice = scan.nextInt();
 		
-		for(int i = 1; i < userChoice; i++) {
-			horsesList.put(("Cheval " + i), horsesStart);
+		for(int i = 0; i < userChoice; i++) {
+			horsesList.put(("Cheval " + (i + 1)), horsesStart);
 		}
 		
 		for(String i : horsesList.keySet()) {
 			System.out.println(i + " " + Arrays.toString(horsesList.get(i)));
 		}
 		
-		runChoice();
+		
+		String runChoice = runChoice();
 		
 		String response = "o";
 		while(response.equalsIgnoreCase("o")) {
+			for(String i : horsesList.keySet()) {
+				int[] currentTurn = horsesList.get(i);
+				int newSpeed = horseSpeed(dice(), horsesList.get(i)[0]);
+				int newDistance = distance(newSpeed);
+				int[] horseTurn = {newSpeed, newDistance};
+				for(int j = 0; j < horseTurn.length; j++) {
+					currentTurn[j] += horseTurn[j];
+				}
+				horsesList.put(i, currentTurn);
+			}
 			
+			for(String i : horsesList.keySet()) System.out.println(i + " " + Arrays.toString(horsesList.get(i)));
 			
 			System.out.println("Veuillez faire avancer le tour en tapant o");
 			scan.nextLine();
@@ -124,8 +135,7 @@ public class HarnessedTrotRun {
 			speed += zeroSpeed[dice - 1];
 		}
 		
-		actualSpeed += speed;
-		return actualSpeed;
+		return actualSpeed + speed;
 	}
 	
 	public static int distance(int actualSpeed) {
@@ -137,11 +147,9 @@ public class HarnessedTrotRun {
 		distance.put(3, 69);
 		distance.put(4, 92);
 		distance.put(5, 115);
-		distance.put(6, 138);
+		distance.put(6, 138);		
 		
-		actualDistance += distance.get(actualSpeed);
-		
-		return actualDistance;
+		return actualDistance + distance.get(actualSpeed);
 		
 	}
 	
