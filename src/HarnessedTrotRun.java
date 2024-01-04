@@ -14,12 +14,23 @@ public class HarnessedTrotRun {
 	public static final int[] fourthSpeed = {-1, 0, 0, 0, 1, 1};
 	public static final int[] fifthSpeed = {-2, -1, 0, 0, 0, 1};
 	public static final int[] sixthSpeed = {-2, -1, 0, 0, 0, 0};
+	public static HashMap<Integer, String> horsesList = new HashMap<Integer, String>();
 	
 	public static Scanner scan = new Scanner(System.in);
 	
 	
 	public static void main(String[] args) {
 		
+		System.out.println("Choisissez le nombre de chevaux au départ de la course :");
+		int userChoice = scan.nextInt();
+		
+		for(int i = 1; i < userChoice; i++) {
+			horsesList.put(i, "Cheval " + i);
+		}
+		
+		for(int i : horsesList.keySet()) {
+			System.out.println(horsesList.get(i));
+		}
 		
 		
 		
