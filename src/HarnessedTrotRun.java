@@ -1,27 +1,63 @@
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 
 public class HarnessedTrotRun {
 
 	public static final int startLine = 0;
 	public static final int finishLine = 2400;
+	public static final int[] zeroSpeed = {0, 1, 1, 1, 2, 2};
+	public static final int[] firstSpeed = {0, 0, 1, 1, 1, 2};
+	public static final int[] secondSpeed = {0, 0, 1, 1, 1, 2};
+	public static final int[] thirdSpeed = {-1, 0, 0, 1, 1, 1};
+	public static final int[] fourthSpeed = {-1, 0, 0, 0, 1, 1};
+	public static final int[] fifthSpeed = {-2, -1, 0, 0, 0, 1};
+	public static final int[] sixthSpeed = {-2, -1, 0, 0, 0, 0};
+	
 	
 	public static void main(String[] args) {
 		
-		System.out.println(dice());
+		int actualSpeed = 2;
+		System.out.println(horseSpeed(dice(), actualSpeed));
+		
 		
 	}
 	
 	public static int dice() {
-		
-		int dice = new Random().nextInt(6);
+		int minDice = 1;
+		int maxDice = 6;
+		int dice = minDice + (int) (Math.random()*(maxDice-minDice));
 		
 		return dice;
 	}
 	
-	public static int horseSpeed(int dice) {
+	public static int horseSpeed(int dice, int actualSpeed) {
 		int speed = 0;
+		switch(actualSpeed) {
+		case 1 :
+			speed += firstSpeed[dice - 1];
+			break;
+		case 2 :
+			speed += secondSpeed[dice - 1];
+			break;
+		case 3 :
+			speed += thirdSpeed[dice - 1];
+			break;
+		case 4 :
+			speed += fourthSpeed[dice - 1];
+			break;
+		case 5 :
+			speed += fifthSpeed[dice - 1];
+			break;
+		case 6 :
+			speed += sixthSpeed[dice - 1];
+			break;
+		default :
+			speed += zeroSpeed[dice - 1];
+		}
 		
-		return speed;
+		actualSpeed += speed;
+		return actualSpeed;
 	}
 
 }
