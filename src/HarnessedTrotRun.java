@@ -24,7 +24,7 @@ public class HarnessedTrotRun {
 	
 	public static void main(String[] args) {
 		System.out.println("Choisissez le nombre de chevaux au départ de la course :");
-		int userChoice = scan.nextInt();
+		int userChoice = validInput(scan, "Veuillez entrer un nombre !!");
 		
 		for(int i = 0; i < userChoice; i++) {
 			horsesList.put(("Cheval " + (i + 1)), horsesStart);
@@ -34,8 +34,11 @@ public class HarnessedTrotRun {
 			System.out.println(i + " " + Arrays.toString(horsesList.get(i)));
 		}
 		
+		scan.nextLine();
 		
 		String runChoice = runChoice();
+		
+		scan.nextLine();
 		ArrayList<String> horsesFinish = new ArrayList<String>();
 		String response = "o";
 		
@@ -60,7 +63,6 @@ public class HarnessedTrotRun {
 			if(!runFinished()) {
 				for(String i : horsesList.keySet()) System.out.println(i + " " + Arrays.toString(horsesList.get(i)));
 				System.out.println("Veuillez faire avancer le tour en tapant o");
-				scan.nextLine();
 				response = scan.nextLine();
 			}else {
 				switch(runChoice) {
@@ -125,7 +127,7 @@ public class HarnessedTrotRun {
 		}
 		System.out.println();
 		
-		System.out.println("Quel type de course souhaitez-vous?(entrez un numéro)");
+		System.out.println("Selectionnez un type de course :(entrez un numéro)");
 		boolean ok = false;
 		
 		while(!ok) {
