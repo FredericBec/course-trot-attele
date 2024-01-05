@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -35,27 +36,64 @@ public class HarnessedTrotRun {
 		
 		
 		String runChoice = runChoice();
-		
+		ArrayList<String> horsesFinish = new ArrayList<String>();
 		String response = "o";
-		while(response.equalsIgnoreCase("o")) {
+		
+		while(response.equalsIgnoreCase("o") && !runFinished()) {
+			
 			for(String i : horsesList.keySet()) {
 				int[] currentTurn = Arrays.copyOf(horsesList.get(i), horsesList.get(i).length);
-				int newSpeed = horseSpeed(dice(), horsesList.get(i)[0]);
-				int newDistance = distance(newSpeed);
-				currentTurn[0] = newSpeed;
-				
-				currentTurn[1] += newDistance;
-				
-				horsesList.put(i, currentTurn);
+				if(!hasFinished(currentTurn[1])) {
+					int newSpeed = horseSpeed(dice(), horsesList.get(i)[0]);
+					int newDistance = distance(newSpeed);
+					currentTurn[0] = newSpeed;
+					
+					currentTurn[1] += newDistance;
+					if(hasFinished(currentTurn[1])) {
+						currentTurn[0] = 0;
+						horsesFinish.add(i);
+					}
+					horsesList.put(i, currentTurn);
+				}
 			}
 			
-			for(String i : horsesList.keySet()) System.out.println(i + " " + Arrays.toString(horsesList.get(i)));
-			
-			System.out.println("Veuillez faire avancer le tour en tapant o");
-			scan.nextLine();
-			response = scan.nextLine();
+			if(!runFinished()) {
+				for(String i : horsesList.keySet()) System.out.println(i + " " + Arrays.toString(horsesList.get(i)));
+				System.out.println("Veuillez faire avancer le tour en tapant o");
+				scan.nextLine();
+				response = scan.nextLine();
+			}else {
+				switch(runChoice) {
+				case "tierce" :
+					winnerTierce(horsesFinish);
+					break;
+				case "quarte" :
+					winnerQuarte(horsesFinish);
+					break;
+				case "quinte" :
+					winnerQuinte(horsesFinish);
+					break;
+				}
+				
+			}
 		}
 		
+		
+	}
+	
+	public static boolean hasFinished(int distance) {
+		
+		return distance >= finishLine;
+	}
+	
+	public static boolean runFinished() {
+		for(int[] currentTurn : horsesList.values()) {
+			if(!hasFinished(currentTurn[1])) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	public static int validInput(Scanner scan, String errorMessage) {
@@ -133,11 +171,12 @@ public class HarnessedTrotRun {
 			break;
 		default :
 			speed += zeroSpeed[dice - 1];
-		}
+		} 
 		
 		actualSpeed += speed;
 		
 		return actualSpeed;
+		
 	}
 	
 	public static int distance(int actualSpeed) {
@@ -157,12 +196,26 @@ public class HarnessedTrotRun {
 		
 	}
 	
-	public static void winnerTierce(String[] horses) {
+	public static void winnerTierce(ArrayList<String> horsesFinish) {
 		int thirdWinner = 3;
 		for(int i = 0; i < thirdWinner; i++) {
-			System.out.println(horses[i]);
+			System.out.println(horsesFinish.get(i));
 		} 
 		
+	}
+	
+	public static void winnerQuarte(ArrayList<String> horsesFinish) {
+		int quarteWinner = 4;
+		for(int i = 0; i < quarteWinner; i++) {
+			System.out.println(horsesFinish.get(i));
+		}
+	}
+	
+	public static void winnerQuinte(ArrayList<String> horsesFinish) {
+		int quinteWinner = 5;
+		for(int i = 0; i < quinteWinner; i++) {
+			System.out.println(horsesFinish.get(i));
+		}
 	}
 
 }
