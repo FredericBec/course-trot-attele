@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class HarnessedTrotRun {
 
+	public static final int minHorses = 12;
+	public static final int maxHorses = 20;
 	public static int startLine = 0;
 	public static final int finishLine = 2400;
 	public static int actualSpeed = 0;
@@ -23,6 +25,7 @@ public class HarnessedTrotRun {
 	
 	
 	public static void main(String[] args) {
+		
 		System.out.println("Choisissez le nombre de chevaux au départ de la course :");
 		int userChoice = validInput(scan, "Veuillez entrer un nombre !!");
 		
@@ -35,6 +38,7 @@ public class HarnessedTrotRun {
 		}
 		
 		scan.nextLine();
+		
 		
 		String runChoice = runChoice();
 		
