@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class HarnessedTrotRun {
 
-	public static final int startLine = 0;
+	public static int startLine = 0;
 	public static final int finishLine = 2400;
-	public static final int actualSpeed = 0;
+	public static int actualSpeed = 0;
 	public static final int[] zeroSpeed = {0, 1, 1, 1, 2, 2};
 	public static final int[] firstSpeed = {0, 0, 1, 1, 1, 2};
 	public static final int[] secondSpeed = {0, 0, 1, 1, 1, 2};
@@ -15,7 +15,7 @@ public class HarnessedTrotRun {
 	public static final int[] fourthSpeed = {-1, 0, 0, 0, 1, 1};
 	public static final int[] fifthSpeed = {-2, -1, 0, 0, 0, 1};
 	public static final int[] sixthSpeed = {-2, -1, 0, 0, 0, 0};
-	public static final int[] horsesStart = {actualSpeed, startLine};
+	public static int[] horsesStart = {actualSpeed, startLine};
 	public static HashMap<String, int[]> horsesList = new HashMap<String, int[]>();
 	
 	public static Scanner scan = new Scanner(System.in);
@@ -39,13 +39,13 @@ public class HarnessedTrotRun {
 		String response = "o";
 		while(response.equalsIgnoreCase("o")) {
 			for(String i : horsesList.keySet()) {
-				int[] currentTurn = horsesList.get(i);
+				int[] currentTurn = Arrays.copyOf(horsesList.get(i), horsesList.get(i).length);
 				int newSpeed = horseSpeed(dice(), horsesList.get(i)[0]);
 				int newDistance = distance(newSpeed);
-				int[] horseTurn = {newSpeed, newDistance};
-				for(int j = 0; j < horseTurn.length; j++) {
-					currentTurn[j] += horseTurn[j];
-				}
+				currentTurn[0] = newSpeed;
+				
+				currentTurn[1] += newDistance;
+				
 				horsesList.put(i, currentTurn);
 			}
 			
@@ -135,7 +135,9 @@ public class HarnessedTrotRun {
 			speed += zeroSpeed[dice - 1];
 		}
 		
-		return actualSpeed + speed;
+		actualSpeed += speed;
+		
+		return actualSpeed;
 	}
 	
 	public static int distance(int actualSpeed) {
@@ -147,9 +149,11 @@ public class HarnessedTrotRun {
 		distance.put(3, 69);
 		distance.put(4, 92);
 		distance.put(5, 115);
-		distance.put(6, 138);		
+		distance.put(6, 138);
 		
-		return actualDistance + distance.get(actualSpeed);
+		actualDistance += distance.get(actualSpeed);
+		
+		return actualDistance;
 		
 	}
 	
